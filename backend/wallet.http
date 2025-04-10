@@ -1,0 +1,17 @@
+POST http://localhost:5000/api/create-wallet
+Content-Type: application/json
+
+{
+  "name": "Devdeep Chauhan",
+  "email": "devdeep@gmail.com",
+  "role": "Donor"
+}
+
+
+# ### Login User
+POST http://localhost:5000/api/login
+Content-Type: application/json
+
+{
+  "email": "devdeep@gmail.com"
+}
