@@ -2,16 +2,46 @@ POST http://localhost:5000/api/create-wallet
 Content-Type: application/json
 
 {
-  "name": "Devdeep Chauhan",
-  "email": "devdeep@gmail.com",
+  "name": "Jash Bohare",
+  "email": "jashbohare@gmail.com",
   "role": "Donor"
 }
 
 
-# ### Login User
+
+
+
+### Login User
 POST http://localhost:5000/api/login
 Content-Type: application/json
 
 {
-  "email": "devdeep@gmail.com"
+  "email": "jashbohare@gmail.com"
+}
+
+
+
+
+### ✅ Send OTP to Email
+POST http://localhost:5000/api/send-otp
+Content-Type: application/json
+
+{
+  "email": "jashbohare@gmail.com"
+}
+
+
+
+
+
+### ✅ Verify OTP and Create Wallet
+POST http://localhost:5000/api/verify-otp
+Content-Type: application/json
+
+{
+  "name": "Jash",
+  "email": "jashbohare@gmail.com",
+  "password": "jash123",
+  "role": "NGO",
+  "otp": "761461" 
 }
