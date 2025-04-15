@@ -1,35 +1,34 @@
-// stellarUtils.js
+// stellarUtils.js ✅ FIXED for ESM + Stellar SDK
+import StellarSdkPkg from "@stellar/stellar-sdk"; // Import as default
+import fetch from "node-fetch"; // Required in Node.js for friendbot
 
-import * as StellarSdk from "@stellar/stellar-sdk";
+const server = new StellarSdkPkg.Horizon.Server("https://horizon-testnet.stellar.org");
 
-// Use the default export for CommonJS compatibility
-const server = new StellarSdk.Horizon.Server("https://horizon-testnet.stellar.org");
-
-// Generate a new Stellar keypair
-export const generateKeypair = () => {
-  return StellarSdk.Keypair.random();
+const generateKeypair = () => {
+  return StellarSdkPkg.Keypair.random();
 };
 
-// Fund the public key using Friendbot on testnet
-export const fundWallet = async (publicKey) => {
+const fundWallet = async (publicKey) => {
   const url = `https://friendbot.stellar.org?addr=${encodeURIComponent(publicKey)}`;
-
   try {
     const response = await fetch(url);
     const result = await response.json();
 
     if (!response.ok) {
-      console.error("❌ Friendbot Error Response:", result);
-      throw new Error("❌ Failed to fund wallet with Friendbot");
+      throw new Error("❌ Friendbot failed to fund the wallet.");
     }
 
-    console.log("✅ Wallet funded by Friendbot:", result);
+    console.log("✅ Wallet funded:", result);
     return result;
-  } catch (err) {
-    console.error("🔥 Friendbot fetch failed:", err);
-    throw err;
+  } catch (error) {
+    console.error("🔥 Friendbot error:", error);
+    throw error;
   }
 };
 
-
-export { server };
+export {
+  generateKeypair,
+  fundWallet,
+  server,
+  StellarSdkPkg as StellarSdk, // 🔁 Export entire SDK as StellarSdk
+};

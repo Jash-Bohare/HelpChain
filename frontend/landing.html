@@ -3,58 +3,44 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>HelpChain - Home</title>
-  <style>
-    #toast {
-      visibility: hidden;
-      min-width: 250px;
-      margin: auto;
-      background-color: #4caf50;
-      color: white;
-      text-align: center;
-      border-radius: 4px;
-      padding: 16px;
-      position: fixed;
-      top: 20px;
-      left: 0; right: 0;
-      z-index: 1;
-    }
-    #toast.show {
-      visibility: visible;
-      animation: fadein 0.5s, fadeout 0.5s 3s;
-    }
-    @keyframes fadein {
-      from { top: 0; opacity: 0; }
-      to { top: 20px; opacity: 1; }
-    }
-    @keyframes fadeout {
-      from { top: 20px; opacity: 1; }
-      to { top: 0; opacity: 0; }
-    }
-  </style>
+  <title>HelpChain - Dashboard</title>
+  <link rel="stylesheet" href="landing.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <h2>🌍 Welcome to HelpChain</h2>
-  <p>This is the main landing page. More content coming soon!</p>
+  <nav class="navbar">
+    <h2 class="logo">HelpChain</h2>
+    <ul class="nav-links">
+      <li><a href="#">Dashboard</a></li>
+      <li><a href="#">Settings</a></li>
+      <li><a href="#" id="logoutBtn">Logout</a></li>
+    </ul>
+  </nav>
 
-  <div id="toast"></div>
+  <main class="dashboard">
+    <section class="welcome-section">
+      <h3>Welcome, <span id="userName"></span>!</h3>
+      <p><strong>Role:</strong> <span id="userRole"></span></p>
+      <p><strong>Public Key:</strong> <span id="publicKey"></span></p>
+    </section>
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const status = params.get("status");
+    <section class="wallet-section card">
+      <h4>💳 Wallet Info</h4>
+      <p><strong>Balance:</strong> <span id="walletBalance">--</span> XLM</p>
+    </section>
 
-    if (status === "success") {
-      showToast("✅ Sign up successful!");
-    } else if (status === "login") {
-      showToast("✅ Login successful!");
-    }
+    <section class="send-section card">
+      <h4>📤 Send Funds</h4>
+      <form id="sendForm">
+        <input type="text" id="recipient" placeholder="Recipient Public Key" required />
+        <input type="number" id="amount" placeholder="Amount in XLM" required />
+        <button type="submit">Send</button>
+      </form>
+      <div id="sendStatus"></div>
+    </section>
+  </main>
 
-    function showToast(msg) {
-      const toast = document.getElementById("toast");
-      toast.innerText = msg;
-      toast.className = "show";
-      setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 4000);
-    }
-  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stellar-sdk/10.4.0/stellar-sdk.min.js"></script>
+  <script src="landing.js"></script>
 </body>
 </html>

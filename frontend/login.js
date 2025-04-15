@@ -1,31 +1,41 @@
-// login.js
-document.getElementById("loginForm").addEventListener("submit", async (event) => {
-  event.preventDefault(); // Prevent form submission
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("loginForm");
+  const messageDiv = document.getElementById("loginMessage");
 
-  const email = document.getElementById("email").value.trim();
-  const password = ""; // Empty because password is not being used yet
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-  if (!email) {
-    alert("Please enter your email.");
-    return;
-  }
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
 
-  try {
-    const res = await fetch("http://localhost:5000/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }), // Sending email, no password for now
-    });
-
-    const data = await res.json();
-    if (res.ok) {
-      alert("Login successful!");
-      window.location.href = "landing.html"; // Redirect after successful login
-    } else {
-      alert(data.error); // Display error if login fails
+    if (!email || !password) {
+      showMessage("❌ Please fill in both email and password.", "red");
+      return;
     }
-  } catch (err) {
-    console.error("❌ Login failed:", err);
-    alert("Login failed, please try again later.");
+
+    try {
+      const response = await fetch("http://localhost:5000/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        showMessage("✅ Login successful! Redirecting...", "green");
+        localStorage.setItem("user", JSON.stringify(data.user));
+        setTimeout(() => window.location.href = "landing.html", 1500);
+      } else {
+        showMessage(`❌ ${data.error}`, "red");
+      }
+    } catch (err) {
+      showMessage(`❌ Network error: ${err.message}`, "red");
+    }
+  });
+
+  function showMessage(text, color) {
+    messageDiv.innerText = text;
+    messageDiv.style.color = color;
   }
 });

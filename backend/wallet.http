@@ -16,7 +16,8 @@ POST http://localhost:5000/api/login
 Content-Type: application/json
 
 {
-  "email": "jashbohare@gmail.com"
+  "email": "jashbohare@gmail.com",
+  "password": "Jash"
 }
 
 
@@ -44,4 +45,18 @@ Content-Type: application/json
   "password": "jash123",
   "role": "NGO",
   "otp": "761461" 
+}
+
+
+
+
+### Send Funds from one user to another
+POST http://localhost:5000/api/send-funds
+Content-Type: application/json
+
+{
+  "senderEmail": "jashbohare@gmail.com",
+  "senderSecret": "SBCDW6FQ73VFLM6JDVOTFUS6YXE4ZCTAFXLR55ZTJLYVWS4ILNBXB2L2",
+  "recipientPublicKey": "GCIL5BVR3CVTZ3SM62I2UDXT7K2HQQQZ3OUX7DZ5HEMGDY7TMRF53B6D",
+  "amount": "10"
 }

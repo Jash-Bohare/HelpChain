@@ -1,25 +1,36 @@
-// login.js
+// ✅ login.js
 
-import { db, ref, get } from "../backend/config.js";
+const loginForm = document.getElementById("loginForm");
 
-// Replace this with the public key you're trying to "log in" with
-const inputPublicKey = "GCQD35O34A3P3DHU4E3O7TA57OHRS734EUKIENBRXJI5H3EJYZDNACYU";
+loginForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-const login = async (publicKey) => {
-  try {
-    const snapshot = await get(ref(db, "wallets/" + publicKey));
-    if (snapshot.exists()) {
-      const walletData = snapshot.val();
-      console.log("✅ Wallet found:");
-      console.log("🔑 Public Key:", walletData.publicKey);
-      console.log("🗝️ Secret Key:", walletData.secretKey);
-      console.log("👤 Role:", walletData.role);
-    } else {
-      console.log("❌ Wallet not found. Please check the public key or sign up first.");
-    }
-  } catch (error) {
-    console.error("🔥 Login error:", error);
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+
+  if (!email || !password) {
+    alert("❌ Please enter both email and password.");
+    return;
   }
-};
 
-login(inputPublicKey);
+  try {
+    const res = await fetch("http://localhost:5000/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      localStorage.setItem("user", JSON.stringify(data.user));
+      alert("✅ Login successful!");
+      window.location.href = "landing.html";
+    } else {
+      alert(`❌ ${data.error}`);
+    }
+  } catch (err) {
+    alert("❌ Network error. Try again later.");
+    console.error(err);
+  }
+});
