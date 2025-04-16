@@ -6,6 +6,8 @@
   <title>HelpChain - Sign Up</title>
   <link rel="stylesheet" href="signup.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <!-- Toastify CSS -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
 <body>
   <div class="container">
@@ -32,17 +34,20 @@
       <button id="sendOtpBtn">Send OTP</button>
       <input type="text" id="otp" placeholder="Enter OTP" style="display:none;" />
       <button id="verifyOtpBtn" style="display:none;">Verify OTP</button>
-      <div id="otpStatus"></div>
 
-      <button id="createWalletBtn" style="display:none;">Create Wallet</button>
+      <button id="createWalletBtn" style="display:none;">Get Keys!</button>
       <div id="keys" class="key-display"></div>
 
+      <button id="copyKeysBtn" style="display:none;">Copy Keys</button>
+
       <button id="finalSignUpBtn" style="display:none;">Sign Up</button>
-      <div id="message" class="message"></div>
 
       <p class="nav-text">Already have an account? <a href="login.html">Login</a></p>
     </div>
   </div>
+
+  <!-- Toastify JS -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
   <script>
     let otpVerified = false;
@@ -50,9 +55,15 @@
     let userDetails = {};
 
     const msg = (text, color = "black") => {
-      const m = document.getElementById("message");
-      m.innerText = text;
-      m.style.color = color;
+      Toastify({
+        text: text,
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        backgroundColor: color,
+        stopOnFocus: true,
+        close: true
+      }).showToast();
     };
 
     document.getElementById("sendOtpBtn").addEventListener("click", async () => {
@@ -71,6 +82,7 @@
           msg(data.message, "green");
           document.getElementById("otp").style.display = "inline-block";
           document.getElementById("verifyOtpBtn").style.display = "inline-block";
+          document.getElementById("sendOtpBtn").style.display = "none";
         } else {
           msg(`❌ ${data.error}`, "red");
         }
@@ -101,19 +113,18 @@
         const data = await res.json();
         if (res.ok) {
           otpVerified = true;
-          document.getElementById("otpStatus").innerText = "✅ OTP Verified!";
+          msg("✅ OTP Verified!", "green");
           document.getElementById("createWalletBtn").style.display = "inline-block";
-
-          document.getElementById("sendOtpBtn").style.display = "none";
           document.getElementById("otp").style.display = "none";
+          document.getElementById("verifyOtpBtn").style.display = "none";
 
           userDetails.publicKey = data.publicKey;
           userDetails.secretKey = data.secretKey;
         } else {
-          document.getElementById("otpStatus").innerText = `❌ ${data.error}`;
+          msg(`❌ ${data.error}`, "red");
         }
       } catch (err) {
-        document.getElementById("otpStatus").innerText = `❌ Network error: ${err.message}`;
+        msg(`❌ Network error: ${err.message}`, "red");
       }
     });
 
@@ -124,9 +135,18 @@
 
       keysGenerated = true;
       document.getElementById("keys").innerText =
-        `🔑 Public Key: ${userDetails.publicKey}\n🗝️ Secret Key: ${userDetails.secretKey}\n⚠️ Copy and save these keys securely.`;
+        `My Public Key: ${userDetails.publicKey}\n\nMy Secret Key: ${userDetails.secretKey}\n\n⚠️ Please store these keys securely.`;
       msg("✅ Wallet created successfully!", "green");
+
       document.getElementById("finalSignUpBtn").style.display = "inline-block";
+      document.getElementById("copyKeysBtn").style.display = "inline-block";
+    });
+
+    document.getElementById("copyKeysBtn").addEventListener("click", () => {
+      const keysText = document.getElementById("keys").innerText;
+      navigator.clipboard.writeText(keysText)
+        .then(() => msg("✅ Keys copied to clipboard!", "green"))
+        .catch(() => msg("❌ Failed to copy keys.", "red"));
     });
 
     document.getElementById("finalSignUpBtn").addEventListener("click", () => {
@@ -136,7 +156,6 @@
       }
 
       localStorage.setItem("user", JSON.stringify(userDetails));
-      alert("✅ Sign Up Successful!");
       window.location.href = "landing.html";
     });
   </script>

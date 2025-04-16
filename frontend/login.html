@@ -22,7 +22,7 @@
         <div class="input-group">
           <input type="password" id="password" placeholder="Password" required />
         </div>
-        
+
         <!-- Message Display Area -->
         <div id="loginMessage" style="margin: 10px 0; font-weight: bold;"></div>
 
@@ -31,6 +31,43 @@
       </form>
     </div>
   </div>
-  <script src="login.js"></script>
+  
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (!email || !password) {
+        document.getElementById("loginMessage").innerText = "❌ Please enter both email and password.";
+        document.getElementById("loginMessage").style.color = "red";
+        return;
+      }
+
+      try {
+        const res = await fetch("http://localhost:5000/api/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          // Store user data in localStorage
+          localStorage.setItem("user", JSON.stringify(data.user));
+
+          // Redirect to dashboard or landing page
+          window.location.href = "landing.html";
+        } else {
+          document.getElementById("loginMessage").innerText = `❌ ${data.error}`;
+          document.getElementById("loginMessage").style.color = "red";
+        }
+      } catch (err) {
+        document.getElementById("loginMessage").innerText = `❌ Network error: ${err.message}`;
+        document.getElementById("loginMessage").style.color = "red";
+      }
+    });
+  </script>
 </body>
 </html>

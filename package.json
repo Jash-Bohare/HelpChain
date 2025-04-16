@@ -9,8 +9,10 @@
   },
   "dependencies": {
     "@stellar/stellar-sdk": "^13.2.0",
+    "bcryptjs": "^3.0.2",
     "body-parser": "^2.2.0",
     "cors": "^2.8.5",
+    "crypto-js": "^4.2.0",
     "express": "^5.1.0",
     "firebase": "^10.8.0",
     "node-fetch": "^3.3.2",

@@ -17,7 +17,7 @@ body {
   display: flex;
   width: 90%;
   max-width: 1000px;
-  height: auto;
+  height: 600px; /* fixed height */
   background: white;
   border-radius: 12px;
   overflow: hidden;
@@ -50,7 +50,19 @@ body {
   padding: 60px 40px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
+  height: 600px; /* match container height */
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.right-panel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.right-panel::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 6px;
 }
 
 .right-panel h2 {
@@ -69,6 +81,18 @@ select {
   border-radius: 30px;
   font-size: 16px;
   background: #f5f5f5;
+  position: relative;
+}
+
+/* Fix for dropdown arrow positioning */
+select {
+  padding-right: 40px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"%3E%3Cpath d="M7 10l5 5 5-5z" fill="%23888888"%3E%3C/path%3E%3C/svg%3E');
+  background-position: right 10px center;
+  background-repeat: no-repeat;
 }
 
 button {
@@ -114,6 +138,7 @@ button:hover {
   background: #f9f9f9;
   padding: 10px;
   border-radius: 8px;
+  word-break: break-word;
 }
 
 @media (max-width: 768px) {
@@ -128,6 +153,11 @@ button:hover {
     width: 100%;
     padding: 40px 20px;
     text-align: center;
+  }
+
+  .right-panel {
+    height: auto;
+    overflow-y: visible;
   }
 
   .left-panel h1 {
