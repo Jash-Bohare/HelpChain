@@ -8,6 +8,7 @@ import { saveUserToFirebase } from "./firebaseUtils.js";
 import { sendTransactionEmail } from "./emailService.js";
 import { db, ref, get } from "./config.js";
 import nodemailer from "nodemailer";
+import bcrypt from "bcryptjs"; // ✅ STEP 1 - added bcrypt
 
 const generateOtp = () => Math.floor(100000 + Math.random() * 900000).toString();
 const otpStore = new Map();
@@ -73,9 +74,19 @@ const verifyOtpAndCreateWallet = async (req, res) => {
 
     await fundWallet(publicKey);
 
-    const userData = { name, email, password, role, publicKey, secretKey };
-    const sanitizedEmail = email.replace(/\./g, "_");
+    // ✅ STEP 2 - Hash the password before saving
+    const hashedPassword = await bcrypt.hash(password, 10);
 
+    const userData = {
+      name,
+      email,
+      password: hashedPassword, // store hashed password
+      role,
+      publicKey,
+      secretKey,
+    };
+
+    const sanitizedEmail = email.replace(/\./g, "_");
     await saveUserToFirebase(sanitizedEmail, userData);
     otpStore.delete(email);
 
@@ -100,9 +111,13 @@ const loginUser = async (req, res) => {
     if (!snapshot.exists()) return res.status(404).json({ error: "User not found." });
 
     const wallets = snapshot.val();
-    const user = Object.values(wallets).find(wallet => wallet.email === email && wallet.password === password);
+    const user = Object.values(wallets).find(wallet => wallet.email === email);
 
     if (!user) return res.status(401).json({ error: "Invalid credentials." });
+
+    // ✅ STEP 3 - Compare hashed password
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) return res.status(401).json({ error: "Invalid credentials." });
 
     res.status(200).json({
       message: "✅ Login successful",
