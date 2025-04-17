@@ -20,44 +20,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  async function fetchTransactions() {
-    const transactionList = document.getElementById("transactionList");
-
-    try {
-      const res = await fetch(`http://localhost:5000/api/transactions/${user.publicKey}`);
-      const data = await res.json();
-
-      if (res.ok) {
-        if (data.length === 0) {
-          transactionList.innerHTML = "No transactions found.";
-          return;
-        }
-
-        transactionList.innerHTML = `
-          <ul class="space-y-2">
-            ${data.map(tx => `
-              <li class="border p-2 rounded bg-gray-50 shadow-sm">
-                <p><strong>Type:</strong> ${tx.type === 'sent' ? '🔻 Sent' : '🔺 Received'}</p>
-                <p><strong>From:</strong> ${tx.fromName} (${tx.from})</p>
-                <p><strong>To:</strong> ${tx.toName} (${tx.to})</p>
-                <p><strong>Amount:</strong> ${tx.amount} XLM</p>
-                <p><strong>Date:</strong> ${new Date(tx.created_at).toLocaleString()}</p>
-                <p><a href="${tx.link}" target="_blank" class="text-blue-500 underline">🔗 View Transaction</a></p>
-              </li>
-            `).join("")}
-          </ul>
-        `;
-      } else {
-        transactionList.innerText = "Error loading transactions.";
-      }
-    } catch (err) {
-      console.error("Transaction history fetch failed:", err);
-      transactionList.innerText = "Error loading transactions.";
-    }
-  }
+  // Copy Public Key
+  document.getElementById("copyBtn").addEventListener("click", () => {
+    navigator.clipboard.writeText(user.publicKey).then(() => {
+      const tooltip = document.getElementById("copyTooltip");
+      tooltip.classList.remove("hidden");
+      setTimeout(() => tooltip.classList.add("hidden"), 2000);
+    });
+  });
 
   await updateBalance();
-  await fetchTransactions();
 
   document.getElementById("logoutBtn").addEventListener("click", () => {
     localStorage.clear();
@@ -67,12 +39,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("sendForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const recipient = document.getElementById("recipient").value.trim();
-    const amount = document.getElementById("amount").value.trim();
-    const statusDiv = document.getElementById("sendStatus");
+    const recipientInput = document.getElementById("recipient");
+    const amountInput = document.getElementById("amount");
+
+    const recipient = recipientInput.value.trim();
+    const amount = amountInput.value.trim();
 
     if (!recipient || !amount) {
-      statusDiv.innerText = "❌ Please enter recipient and amount.";
+      showToast("❌ Please enter recipient and amount.", "error");
       return;
     }
 
@@ -91,16 +65,35 @@ document.addEventListener("DOMContentLoaded", async () => {
       const data = await response.json();
 
       if (response.ok) {
-        statusDiv.innerText = `✅ ${data.message}`;
+        showToast(`✅ ${data.message}`, "success");
+
+        // Clear input fields
+        recipientInput.value = "";
+        amountInput.value = "";
+
         await updateBalance();
-        await fetchTransactions(); // Refresh history after sending
-        document.getElementById("sendForm").reset();
       } else {
-        statusDiv.innerText = `❌ ${data.error}`;
+        showToast(`❌ ${data.error}`, "error");
       }
     } catch (err) {
       console.error("❌ Transaction failed:", err);
-      statusDiv.innerText = "❌ Something went wrong. Try again.";
+      showToast("❌ Something went wrong. Try again.", "error");
     }
   });
+
+  // Toast function
+  function showToast(message, type = "success") {
+    const toast = document.createElement("div");
+    toast.innerText = message;
+    toast.className = `fixed bottom-5 right-5 px-4 py-2 rounded shadow-lg text-white text-sm z-50 transition-opacity duration-300 ${
+      type === "success" ? "bg-green-600" : "bg-red-600"
+    }`;
+
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+      toast.classList.add("opacity-0");
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
+  }
 });
