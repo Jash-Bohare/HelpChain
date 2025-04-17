@@ -9,7 +9,7 @@ import { sendTransactionEmail } from "./emailService.js";
 import { db, ref, get } from "./config.js";
 import nodemailer from "nodemailer";
 import bcrypt from "bcryptjs";
-import fetch from "node-fetch"; // ✅ Needed for Horizon API calls
+import fetch from "node-fetch";
 
 const generateOtp = () => Math.floor(100000 + Math.random() * 900000).toString();
 const otpStore = new Map();
@@ -235,12 +235,22 @@ const getTransactionHistory = async (req, res) => {
       });
     }
 
+    // Get all users to map publicKey -> name
+    const snapshot = await get(ref(db, "wallets"));
+    const wallets = snapshot.exists() ? snapshot.val() : {};
+    const keyToName = {};
+    Object.values(wallets).forEach(u => {
+      keyToName[u.publicKey] = u.name;
+    });
+
     const transactions = data._embedded.records
       .filter(tx => tx.type === 'payment')
       .map(tx => ({
         id: tx.id,
         from: tx.from,
+        fromName: keyToName[tx.from] || "Unknown",
         to: tx.to,
+        toName: keyToName[tx.to] || "Unknown",
         amount: tx.amount,
         asset_type: tx.asset_type,
         type: tx.from === publicKey ? 'sent' : 'received',
@@ -261,5 +271,5 @@ export {
   verifyOtpAndCreateWallet,
   loginUser,
   sendFunds,
-  getTransactionHistory, // ✅ Export it
+  getTransactionHistory,
 };

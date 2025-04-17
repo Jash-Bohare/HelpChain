@@ -37,10 +37,12 @@ document.addEventListener("DOMContentLoaded", async () => {
           <ul class="space-y-2">
             ${data.map(tx => `
               <li class="border p-2 rounded bg-gray-50 shadow-sm">
-                <p><strong>From:</strong> ${tx.from}</p>
-                <p><strong>To:</strong> ${tx.to}</p>
+                <p><strong>Type:</strong> ${tx.type === 'sent' ? '🔻 Sent' : '🔺 Received'}</p>
+                <p><strong>From:</strong> ${tx.fromName} (${tx.from})</p>
+                <p><strong>To:</strong> ${tx.toName} (${tx.to})</p>
                 <p><strong>Amount:</strong> ${tx.amount} XLM</p>
-                <p class="text-sm text-gray-500"><strong>Date:</strong> ${new Date(tx.created_at).toLocaleString()}</p>
+                <p><strong>Date:</strong> ${new Date(tx.created_at).toLocaleString()}</p>
+                <p><a href="${tx.link}" target="_blank" class="text-blue-500 underline">🔗 View Transaction</a></p>
               </li>
             `).join("")}
           </ul>
