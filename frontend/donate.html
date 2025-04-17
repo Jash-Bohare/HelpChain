@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Donate to NGO</title>
+  <link rel="stylesheet" href="landing.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <nav class="navbar">
+    <h2 class="logo">HelpChain</h2>
+    <ul class="nav-links">
+      <li><a href="landing.html">Dashboard</a></li>
+      <li><a href="login.html" id="logoutBtn">Logout</a></li>
+    </ul>
+  </nav>
+
+  <main class="donate-section">
+    <section class="donate-card card">
+      <h4>Donate to NGO</h4>
+      <p id="ngoName">Loading NGO name...</p>
+
+      <form id="donationForm">
+        <input type="number" id="donationAmount" placeholder="Amount in XLM" required />
+        <button type="submit">Donate</button>
+      </form>
+
+      <div id="donationStatus"></div>
+    </section>
+  </main>
+
+  <script src="donate.js"></script>
+</body>
+</html>

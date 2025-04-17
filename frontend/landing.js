@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("userRole").innerText = user.role;
   document.getElementById("publicKey").innerText = user.publicKey;
 
-  // Load balance using Stellar SDK
   const server = new StellarSdk.Server("https://horizon-testnet.stellar.org");
 
   async function updateBalance() {
@@ -21,15 +20,48 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  await updateBalance();
+  async function fetchTransactions() {
+    const transactionList = document.getElementById("transactionList");
 
-  // Logout
+    try {
+      const res = await fetch(`http://localhost:5000/api/transactions/${user.publicKey}`);
+      const data = await res.json();
+
+      if (res.ok) {
+        if (data.length === 0) {
+          transactionList.innerHTML = "No transactions found.";
+          return;
+        }
+
+        transactionList.innerHTML = `
+          <ul class="space-y-2">
+            ${data.map(tx => `
+              <li class="border p-2 rounded bg-gray-50 shadow-sm">
+                <p><strong>From:</strong> ${tx.from}</p>
+                <p><strong>To:</strong> ${tx.to}</p>
+                <p><strong>Amount:</strong> ${tx.amount} XLM</p>
+                <p class="text-sm text-gray-500"><strong>Date:</strong> ${new Date(tx.created_at).toLocaleString()}</p>
+              </li>
+            `).join("")}
+          </ul>
+        `;
+      } else {
+        transactionList.innerText = "Error loading transactions.";
+      }
+    } catch (err) {
+      console.error("Transaction history fetch failed:", err);
+      transactionList.innerText = "Error loading transactions.";
+    }
+  }
+
+  await updateBalance();
+  await fetchTransactions();
+
   document.getElementById("logoutBtn").addEventListener("click", () => {
     localStorage.clear();
     window.location.href = "index.html";
   });
 
-  // 🔁 Send funds via backend
   document.getElementById("sendForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -49,7 +81,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         body: JSON.stringify({
           senderEmail: user.email,
           senderSecret: user.secretKey,
-          recipientPublicKey: recipient,  // ✅ This must match backend
+          recipientPublicKey: recipient,
           amount: amount
         }),
       });
@@ -59,6 +91,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (response.ok) {
         statusDiv.innerText = `✅ ${data.message}`;
         await updateBalance();
+        await fetchTransactions(); // Refresh history after sending
         document.getElementById("sendForm").reset();
       } else {
         statusDiv.innerText = `❌ ${data.error}`;

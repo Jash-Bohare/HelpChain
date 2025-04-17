@@ -3,7 +3,8 @@ import {
   sendOtp,
   verifyOtpAndCreateWallet,
   loginUser,
-  sendFunds, // ✅ Include sendFunds handler
+  sendFunds,
+  getTransactionHistory, // ✅ Moved to the correct import
 } from "./walletController.js";
 
 const router = express.Router();
@@ -18,6 +19,11 @@ router.post("/login", loginUser);
 // ======================
 // ✅ Stellar Wallet Operations
 // ======================
-router.post("/send-funds", sendFunds); // ✅ Transfer funds + notify both users
+router.post("/send-funds", sendFunds);
+
+// ======================
+// ✅ Transaction History Route
+// ======================
+router.get("/transactions/:publicKey", getTransactionHistory); // ✅ Transaction history route
 
 export default router;

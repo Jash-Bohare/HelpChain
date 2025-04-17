@@ -8,7 +8,8 @@ import { saveUserToFirebase } from "./firebaseUtils.js";
 import { sendTransactionEmail } from "./emailService.js";
 import { db, ref, get } from "./config.js";
 import nodemailer from "nodemailer";
-import bcrypt from "bcryptjs"; // ✅ STEP 1 - added bcrypt
+import bcrypt from "bcryptjs";
+import fetch from "node-fetch"; // ✅ Needed for Horizon API calls
 
 const generateOtp = () => Math.floor(100000 + Math.random() * 900000).toString();
 const otpStore = new Map();
@@ -74,13 +75,12 @@ const verifyOtpAndCreateWallet = async (req, res) => {
 
     await fundWallet(publicKey);
 
-    // ✅ STEP 2 - Hash the password before saving
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const userData = {
       name,
       email,
-      password: hashedPassword, // store hashed password
+      password: hashedPassword,
       role,
       publicKey,
       secretKey,
@@ -115,7 +115,6 @@ const loginUser = async (req, res) => {
 
     if (!user) return res.status(401).json({ error: "Invalid credentials." });
 
-    // ✅ STEP 3 - Compare hashed password
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) return res.status(401).json({ error: "Invalid credentials." });
 
@@ -222,4 +221,45 @@ Team HelpChain`;
   }
 };
 
-export { sendOtp, verifyOtpAndCreateWallet, loginUser, sendFunds };
+const getTransactionHistory = async (req, res) => {
+  const { publicKey } = req.params;
+
+  try {
+    const response = await fetch(`https://horizon-testnet.stellar.org/accounts/${publicKey}/payments?order=desc&limit=50`);
+    const data = await response.json();
+
+    if (data.status === 404 || !data._embedded || !data._embedded.records) {
+      return res.status(404).json({
+        message: "No transactions found or account not found.",
+        transactions: [],
+      });
+    }
+
+    const transactions = data._embedded.records
+      .filter(tx => tx.type === 'payment')
+      .map(tx => ({
+        id: tx.id,
+        from: tx.from,
+        to: tx.to,
+        amount: tx.amount,
+        asset_type: tx.asset_type,
+        type: tx.from === publicKey ? 'sent' : 'received',
+        created_at: tx.created_at,
+        hash: tx.transaction_hash,
+        link: `https://stellar.expert/explorer/testnet/tx/${tx.transaction_hash}`
+      }));
+
+    res.status(200).json(transactions);
+  } catch (error) {
+    console.error("🔥 Error fetching transactions:", error);
+    res.status(500).json({ error: "Internal server error while fetching transactions" });
+  }
+};
+
+export {
+  sendOtp,
+  verifyOtpAndCreateWallet,
+  loginUser,
+  sendFunds,
+  getTransactionHistory, // ✅ Export it
+};

@@ -1,4 +1,5 @@
-// stellarUtils.js ✅ FIXED for ESM + Stellar SDK
+// stellarUtils.js
+
 import StellarSdkPkg from "@stellar/stellar-sdk"; // Import as default
 import fetch from "node-fetch"; // Required in Node.js for friendbot
 
@@ -26,9 +27,38 @@ const fundWallet = async (publicKey) => {
   }
 };
 
+// ✅ Add the getTransactionHistory function
+const getTransactionHistory = async (publicKey) => {
+  try {
+    const response = await fetch(`https://horizon-testnet.stellar.org/accounts/${publicKey}/payments?order=desc&limit=50`);
+    const data = await response.json();
+
+    // Filter only successful payment operations
+    const transactions = data._embedded.records
+      .filter(tx => tx.type === 'payment' && tx.successful !== false)
+      .map(tx => ({
+        id: tx.id,
+        from: tx.from,
+        to: tx.to,
+        amount: tx.amount,
+        asset_type: tx.asset_type,
+        type: tx.from === publicKey ? 'sent' : 'received',
+        created_at: tx.created_at,
+        hash: tx.transaction_hash,
+        link: `https://stellar.expert/explorer/testnet/tx/${tx.transaction_hash}`
+      }));
+
+    return transactions;
+  } catch (error) {
+    console.error("🔥 Error fetching transactions:", error);
+    throw error;
+  }
+};
+
 export {
   generateKeypair,
   fundWallet,
   server,
   StellarSdkPkg as StellarSdk, // 🔁 Export entire SDK as StellarSdk
+  getTransactionHistory, // ✅ Export the new function
 };
