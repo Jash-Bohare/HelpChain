@@ -66,3 +66,27 @@ Content-Type: application/json
 ### Get Transactions
 GET http://localhost:5000/api/transactions/GB6DDDND3AQQ2PEUUV34WU2RB2L3NEJQDS4U7U7OWWFZT2PUN7F54WOD
 
+
+
+### Send OTP
+POST http://localhost:5000/api/send-otp
+Content-Type: application/json
+
+{
+  "email": "provoice.management@gmail.com"
+}
+
+
+
+
+### Verify OTP & Create Wallet
+POST http://localhost:5000/api/verify-otp
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "email": "provoice.management@gmail.com",
+  "password": "test1234",
+  "role": "Donor",
+  "otp": "467302"
+}

@@ -5,7 +5,7 @@ import {
   StellarSdk,
 } from "./stellarUtils.js";
 import { saveUserToFirebase } from "./firebaseUtils.js";
-import { sendTransactionEmail } from "./emailService.js";
+import { sendTransactionEmail, sendWelcomeEmail } from "./emailService.js";
 import { db, ref, get } from "./config.js";
 import nodemailer from "nodemailer";
 import bcrypt from "bcryptjs";
@@ -14,6 +14,7 @@ import fetch from "node-fetch";
 const generateOtp = () => Math.floor(100000 + Math.random() * 900000).toString();
 const otpStore = new Map();
 
+// ✅ Send OTP
 const sendOtp = async (req, res) => {
   const { email } = req.body;
   if (!email) return res.status(400).json({ error: "Email is required" });
@@ -53,6 +54,7 @@ const sendOtp = async (req, res) => {
   }
 };
 
+// ✅ Verify OTP and Create Wallet
 const verifyOtpAndCreateWallet = async (req, res) => {
   const { name, email, password, role, otp } = req.body;
   const storedOtp = otpStore.get(email);
@@ -88,6 +90,7 @@ const verifyOtpAndCreateWallet = async (req, res) => {
 
     const sanitizedEmail = email.replace(/\./g, "_");
     await saveUserToFirebase(sanitizedEmail, userData);
+    await sendWelcomeEmail(email, name, publicKey); // ✅ Send welcome email
     otpStore.delete(email);
 
     res.status(200).json({
@@ -102,6 +105,7 @@ const verifyOtpAndCreateWallet = async (req, res) => {
   }
 };
 
+// ✅ Login
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) return res.status(400).json({ error: "Email and password required." });
@@ -135,9 +139,9 @@ const loginUser = async (req, res) => {
   }
 };
 
+// ✅ Send Funds
 const sendFunds = async (req, res) => {
   const { senderEmail, senderSecret, recipientPublicKey, amount } = req.body;
-
   if (!senderEmail || !senderSecret || !recipientPublicKey || !amount) {
     return res.status(400).json({ error: "Missing required fields." });
   }
@@ -148,7 +152,6 @@ const sendFunds = async (req, res) => {
 
     const sender = Object.values(wallets).find(u => u.email === senderEmail);
     const recipient = Object.values(wallets).find(u => u.publicKey === recipientPublicKey);
-
     if (!sender) return res.status(404).json({ error: "Sender not found." });
 
     const sourceKeypair = StellarSdk.Keypair.fromSecret(senderSecret);
@@ -221,6 +224,7 @@ Team HelpChain`;
   }
 };
 
+// ✅ Transaction History
 const getTransactionHistory = async (req, res) => {
   const { publicKey } = req.params;
 
@@ -228,20 +232,14 @@ const getTransactionHistory = async (req, res) => {
     const response = await fetch(`https://horizon-testnet.stellar.org/accounts/${publicKey}/payments?order=desc&limit=50`);
     const data = await response.json();
 
-    if (data.status === 404 || !data._embedded || !data._embedded.records) {
-      return res.status(404).json({
-        message: "No transactions found or account not found.",
-        transactions: [],
-      });
+    if (data.status === 404 || !data._embedded?.records) {
+      return res.status(404).json({ transactions: [] });
     }
 
-    // Get all users to map publicKey -> name
     const snapshot = await get(ref(db, "wallets"));
     const wallets = snapshot.exists() ? snapshot.val() : {};
     const keyToName = {};
-    Object.values(wallets).forEach(u => {
-      keyToName[u.publicKey] = u.name;
-    });
+    Object.values(wallets).forEach(u => (keyToName[u.publicKey] = u.name));
 
     const transactions = data._embedded.records
       .filter(tx => tx.type === 'payment')
@@ -253,7 +251,7 @@ const getTransactionHistory = async (req, res) => {
         toName: keyToName[tx.to] || "Unknown",
         amount: tx.amount,
         asset_type: tx.asset_type,
-        type: tx.from === publicKey ? 'sent' : 'received',
+        type: tx.from === publicKey ? "sent" : "received",
         created_at: tx.created_at,
         hash: tx.transaction_hash,
         link: `https://stellar.expert/explorer/testnet/tx/${tx.transaction_hash}`
