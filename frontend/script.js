@@ -138,6 +138,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.execCommand("copy");
     document.body.removeChild(tempTextArea);
 
-    showToast("✅ Keys copied to clipboard!", "#3498db");
+    showToast("Keys copied to clipboard!", "#3498db");
   });
 });

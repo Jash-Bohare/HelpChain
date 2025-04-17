@@ -23,9 +23,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Copy Public Key
   document.getElementById("copyBtn").addEventListener("click", () => {
     navigator.clipboard.writeText(user.publicKey).then(() => {
-      const tooltip = document.getElementById("copyTooltip");
-      tooltip.classList.remove("hidden");
-      setTimeout(() => tooltip.classList.add("hidden"), 2000);
+      showToast("✅ Public key copied to clipboard!", "success");
+    }).catch(() => {
+      showToast("❌ Failed to copy public key.", "error");
     });
   });
 
@@ -65,9 +65,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       const data = await response.json();
 
       if (response.ok) {
-        showToast(`✅ ${data.message}`, "success");
+        showToast(`${data.message}`, "success");
 
-        // Clear input fields
         recipientInput.value = "";
         amountInput.value = "";
 
@@ -85,7 +84,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   function showToast(message, type = "success") {
     const toast = document.createElement("div");
     toast.innerText = message;
-    toast.className = `fixed bottom-5 right-5 px-4 py-2 rounded shadow-lg text-white text-sm z-50 transition-opacity duration-300 ${
+    toast.className = `fixed top-5 right-5 px-4 py-2 rounded shadow-lg text-white text-sm z-50 transition-opacity duration-300 ${
       type === "success" ? "bg-green-600" : "bg-red-600"
     }`;
 

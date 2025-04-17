@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await response.json();
 
       if (response.ok) {
-        showMessage("✅ Login successful! Redirecting...", "green");
+        showMessage("Login successful! Redirecting...", "green");
         localStorage.setItem("user", JSON.stringify(data.user));
         setTimeout(() => window.location.href = "landing.html", 1500);
       } else {

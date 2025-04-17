@@ -119,7 +119,7 @@ const loginUser = async (req, res) => {
     if (!passwordMatch) return res.status(401).json({ error: "Invalid credentials." });
 
     res.status(200).json({
-      message: "✅ Login successful",
+      message: "Login successful",
       user: {
         name: user.name,
         email: user.email,
@@ -213,7 +213,7 @@ Team HelpChain`;
       await sendTransactionEmail(recipient.email, "HelpChain - Funds Received", creditMessage);
     }
 
-    res.status(200).json({ message: "✅ Funds sent and email notifications delivered!" });
+    res.status(200).json({ message: "Funds sent and email notifications delivered!" });
 
   } catch (error) {
     console.error("❌ SendFunds error:", error);
