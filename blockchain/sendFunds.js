@@ -1,5 +1,3 @@
-// sendFunds.js
-
 import pkg from "@stellar/stellar-sdk";
 const { Keypair, Server, TransactionBuilder, Operation, Asset, Networks } = pkg;
 import fetch from "node-fetch";
@@ -8,8 +6,8 @@ import fetch from "node-fetch";
 const server = new Server("https://horizon-testnet.stellar.org");
 
 // Sender credentials (in real usage, take from login or input)
-const senderSecret = "SXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"; // ⛔ Replace with real key
-const recipientPublic = "GXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"; // ⛔ Replace with real recipient
+const senderSecret = "SXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"; //  Replace with real key
+const recipientPublic = "GXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"; //  Replace with real recipient
 
 const amountToSend = "10"; // Amount of XLM to send
 

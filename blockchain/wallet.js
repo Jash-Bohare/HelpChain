@@ -1,5 +1,3 @@
-// wallet.js
-
 import stellar from "@stellar/stellar-sdk";
 import fetch from "node-fetch";
 import { db, ref, set } from "../backend/config.js";

@@ -1,13 +1,10 @@
-// config.js (inside backend folder)
-
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set, get } from "firebase/database"; // ✅ included 'get'
+import { getDatabase, ref, set, get } from "firebase/database"; 
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyC-vKU_FfHCEFwb4-fyg2w9BN7IzzcyyGs",
   authDomain: "helpchain-fc9b2.firebaseapp.com",
-  databaseURL: "https://helpchain-fc9b2-default-rtdb.firebaseio.com", // ✅ required
+  databaseURL: "https://helpchain-fc9b2-default-rtdb.firebaseio.com", 
   projectId: "helpchain-fc9b2",
   storageBucket: "helpchain-fc9b2.appspot.com",
   messagingSenderId: "564899371743",

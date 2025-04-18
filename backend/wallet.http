@@ -23,6 +23,7 @@ Content-Type: application/json
 
 
 
+
 ### ✅ Send OTP to Email
 POST http://localhost:5000/api/send-otp
 Content-Type: application/json
@@ -50,6 +51,7 @@ Content-Type: application/json
 
 
 
+
 ### Send Funds from one user to another
 POST http://localhost:5000/api/send-funds
 Content-Type: application/json
@@ -63,8 +65,12 @@ Content-Type: application/json
 
 
 
+
+
 ### Get Transactions
 GET http://localhost:5000/api/transactions/GB6DDDND3AQQ2PEUUV34WU2RB2L3NEJQDS4U7U7OWWFZT2PUN7F54WOD
+
+
 
 
 
@@ -75,6 +81,7 @@ Content-Type: application/json
 {
   "email": "provoice.management@gmail.com"
 }
+
 
 
 

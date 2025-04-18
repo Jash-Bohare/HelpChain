@@ -1,5 +1,3 @@
-// stellarUtils.js
-
 import StellarSdkPkg from "@stellar/stellar-sdk"; // Import as default
 import fetch from "node-fetch"; // Required in Node.js for friendbot
 
@@ -27,7 +25,6 @@ const fundWallet = async (publicKey) => {
   }
 };
 
-// ✅ Add the getTransactionHistory function
 const getTransactionHistory = async (publicKey) => {
   try {
     const response = await fetch(`https://horizon-testnet.stellar.org/accounts/${publicKey}/payments?order=desc&limit=50`);
@@ -59,6 +56,6 @@ export {
   generateKeypair,
   fundWallet,
   server,
-  StellarSdkPkg as StellarSdk, // 🔁 Export entire SDK as StellarSdk
-  getTransactionHistory, // ✅ Export the new function
+  StellarSdkPkg as StellarSdk, // Export entire SDK as StellarSdk
+  getTransactionHistory, // Export the new function
 };

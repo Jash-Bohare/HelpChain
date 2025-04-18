@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }).showToast();
   };
 
-  // Step 1️⃣ Send OTP
+  // Step 1️ Send OTP
   sendOtpBtn.addEventListener("click", async () => {
     const email = document.getElementById("email").value.trim();
     if (!email) {
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Step 2️⃣ Verify OTP and Show Wallet
+  // Step 2️ Verify OTP and Show Wallet
   verifyOtpBtn.addEventListener("click", async () => {
     const name = document.getElementById("name").value.trim();
     const email = document.getElementById("email").value.trim();
@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Step 3️⃣ Final Sign Up
+  // Step 3️ Final Sign Up
   finalSignUpBtn.addEventListener("click", () => {
     if (!otpVerified || !keysGenerated) {
       showToast("❌ Complete all steps before signing up.", "#e74c3c");
@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1500);
   });
 
-  // Step 4️⃣ Copy Keys
+  // Step 4️ Copy Keys
   copyKeysBtn.addEventListener("click", () => {
     if (!userData.publicKey || !userData.secretKey) {
       showToast("❌ Keys not generated yet.", "#e74c3c");

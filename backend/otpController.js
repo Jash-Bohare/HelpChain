@@ -1,5 +1,3 @@
-// otpController.js
-
 import { db, ref, set } from "./config.js";
 import { sendOTPEmail } from "./emailService.js";
 
