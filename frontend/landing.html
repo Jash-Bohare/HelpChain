@@ -125,7 +125,7 @@
         <div class="relative bg-white/80 backdrop-blur-lg rounded-2xl p-8 shadow-xl">
           <div class="space-y-2">
             <h3
-              class="text-2xl font-black text-transparent bg-gradient-to-r from-[#10024a] to-[#bacad6] bg-clip-text">
+              class="text-2xl font-black text-transparent bg-gradient-to-r from-[#10024a] to-[#10024a] bg-clip-text">
               Instant Transfer</h3>
             <form id="sendForm" class="space-y-6">
               <div>
@@ -155,6 +155,16 @@
   <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/stellar-sdk/10.4.0/stellar-sdk.min.js"></script>
   <script src="landing.js"></script>
+
+  <!-- Logout Button Logic -->
+  <script>
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+      // Perform any logout operations (e.g., clearing session or token)
+
+      // Redirect to login page
+      window.location.href = "login.html";  // This will redirect the user to login.html
+    });
+  </script>
 </body>
 
 </html>

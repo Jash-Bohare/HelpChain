@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
   const user = JSON.parse(localStorage.getItem("user"));
-  if (!user) return (window.location.href = "index.html");
+  if (!user) return (window.location.href = "login.html"); // Redirect to login if no user
 
   // Display user info
   document.getElementById("userName").innerText = user.name;
@@ -31,9 +31,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   await updateBalance();
 
+  // Logout button logic
   document.getElementById("logoutBtn").addEventListener("click", () => {
     localStorage.clear();
-    window.location.href = "index.html";
+    window.location.href = "login.html";  // Redirect to login page after logout
   });
 
   document.getElementById("sendForm").addEventListener("submit", async (e) => {

@@ -12,13 +12,15 @@
     body {
       margin: 0;
       padding: 0;
-      height: 100%;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to bottom right, #10024a, #bacad6);
       overflow-x: hidden;
-      overflow-y: hidden;
-      display: flex;
-      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .content-wrapper {
+      background: linear-gradient(to bottom right, #10024a, #bacad6);
+      flex-grow: 1;
+      position: relative;
     }
 
     .blur-circle {
@@ -50,6 +52,7 @@
     }
 
     @keyframes float {
+
       0%,
       100% {
         transform: translateY(0);
@@ -174,8 +177,8 @@
       padding: 30px;
       background-color: #10024a;
       color: white;
-      margin-top: auto;
       font-size: 1.1rem;
+      width: 100%;
     }
 
     footer hr {
@@ -197,58 +200,63 @@
   </style>
 </head>
 
-<body class="relative text-white">
+<body class="min-h-screen flex flex-col relative text-white">
+  <!-- Content Wrapper with Gradient Background -->
+  <div class="content-wrapper">
+    <!-- Background Blur Circles -->
+    <div class="blur-circle circle-1"></div>
+    <div class="blur-circle circle-2"></div>
 
-  <!-- Background Blur Circles -->
-  <div class="blur-circle circle-1"></div>
-  <div class="blur-circle circle-2"></div>
+    <!-- Geometric Shapes -->
+    <div class="geometric-shape triangle"></div>
+    <div class="geometric-shape square"></div>
+    <div class="geometric-shape rotating-square"></div>
 
-  <!-- Geometric Shapes -->
-  <div class="geometric-shape triangle"></div>
-  <div class="geometric-shape square"></div>
-  <div class="geometric-shape rotating-square"></div>
+    <!-- Main Content -->
+    <div class="flex-grow flex flex-col">
+      <!-- Header with Logo -->
+      <header class="relative z-10 flex justify-center items-center mt-12">
+        <div class="relative text-white text-6xl font-bold border-b-4 border-white px-6 pb-2">
+          HelpChain
+          <span class="absolute -top-3 -left-6 text-white text-lg">★</span>
+          <span class="absolute -top-5 left-1/2 transform -translate-x-1/2 text-white text-sm">✦</span>
+          <span class="absolute -top-3 -right-6 text-white text-lg">★</span>
+        </div>
+      </header>
 
-  <!-- Header with Updated Logo -->
-  <header class="relative z-10 flex justify-center items-center mt-12">
-    <div class="relative text-white text-6xl font-bold border-b-4 border-white px-6 pb-2">
-      HelpChain
-      <span class="absolute -top-3 -left-6 text-white text-lg">★</span>
-      <span class="absolute -top-5 left-1/2 transform -translate-x-1/2 text-white text-sm">✦</span>
-      <span class="absolute -top-3 -right-6 text-white text-lg">★</span>
+      <!-- Hero Section -->
+      <section class="hero-section">
+        <h1>Bringing Transparency & Trust to Donations</h1>
+        <p>Track how your donations are used — real-time, secure, and decentralized with Stellar.</p>
+      </section>
+
+      <!-- Features Section -->
+      <section class="feature-container">
+        <div class="feature-item">
+          <h3>✅ Verified NGOs</h3>
+          <p>Support organizations vetted for transparency and impact.</p>
+        </div>
+        <div class="feature-item">
+          <h3>🔄 Live Donations</h3>
+          <p>See real-time updates on where the funds are flowing.</p>
+        </div>
+        <div class="feature-item">
+          <h3>🔐 Secured by Blockchain</h3>
+          <p>Stellar-based smart tracking ensures every donation is accounted for.</p>
+        </div>
+      </section>
+
+      <!-- CTA Button -->
+      <section class="text-center pb-12">
+        <a href="index.html" class="cta-btn">Get Started</a>
+      </section>
     </div>
-  </header>
-
-  <!-- Hero Section -->
-  <section class="hero-section">
-    <h1>Bringing Transparency & Trust to Donations</h1>
-    <p>Track how your donations are used — real-time, secure, and decentralized with Stellar.</p>
-  </section>
-
-  <!-- Feature Section -->
-  <section class="feature-container">
-    <div class="feature-item">
-      <h3>✅ Verified NGOs</h3>
-      <p>Support organizations vetted for transparency and impact.</p>
-    </div>
-    <div class="feature-item">
-      <h3>🔄 Live Donations</h3>
-      <p>See real-time updates on where the funds are flowing.</p>
-    </div>
-    <div class="feature-item">
-      <h3>🔐 Secured by Blockchain</h3>
-      <p>Stellar-based smart tracking ensures every donation is accounted for.</p>
-    </div>
-  </section>
-
-  <!-- CTA Button -->
-  <section class="text-center pb-12">
-    <a href="index.html" class="cta-btn">Get Started</a>
-  </section>
+  </div>
 
   <!-- Footer -->
   <footer>
     <p>
-        Made with 💙 on <span class="font-semibold">Stellar</span> by
+      Made with 💙 on <span class="font-semibold">Stellar</span> by
       <span class="font-bold">PseudoCoders</span>
     </p>
   </footer>
