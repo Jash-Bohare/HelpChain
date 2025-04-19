@@ -97,3 +97,11 @@ Content-Type: application/json
   "role": "Donor",
   "otp": "467302"
 }
+
+
+
+
+
+### Get All NGOs
+GET http://localhost:5000/api/ngos
+Content-Type: application/json
