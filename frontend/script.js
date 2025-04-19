@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
   sendOtpBtn.addEventListener("click", async () => {
     const email = document.getElementById("email").value.trim();
     if (!email) {
-      showToast("❌ Please enter your email.", "#e74c3c");
+      showToast("Please enter your email.", "#e74c3c");
       return;
     }
 
@@ -44,10 +44,10 @@ document.addEventListener("DOMContentLoaded", () => {
         otpInput.style.display = "inline-block";
         verifyOtpBtn.style.display = "inline-block";
       } else {
-        showToast(`❌ ${data.error}`, "#e74c3c");
+        showToast(`${data.error}`, "#e74c3c");
       }
     } catch (err) {
-      showToast(`❌ Network error: ${err.message}`, "#e67e22");
+      showToast(`Network error: ${err.message}`, "#e67e22");
     }
   });
 
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const otp = otpInput.value.trim();
 
     if (!name || !email || !password || !role || !otp) {
-      showToast("❌ Please fill all fields and enter OTP.", "#e74c3c");
+      showToast("Please fill all fields and enter OTP.", "#e74c3c");
       return;
     }
 
@@ -81,8 +81,8 @@ document.addEventListener("DOMContentLoaded", () => {
         userData.publicKey = data.publicKey;
         userData.secretKey = data.secretKey;
 
-        otpStatus.innerText = "✅ OTP verified!";
-        showToast("✅ OTP verified and wallet created!", "#2ecc71");
+        otpStatus.innerText = "OTP verified!";
+        showToast("OTP verified and wallet created!", "#2ecc71");
 
         keysDiv.innerText = `🔑 Public Key: ${userData.publicKey}\n🗝️ Secret Key: ${userData.secretKey}`;
         keysDiv.style.whiteSpace = "pre-wrap";
@@ -91,31 +91,30 @@ document.addEventListener("DOMContentLoaded", () => {
         finalSignUpBtn.style.display = "inline-block";
         copyKeysBtn.style.display = "inline-block";
       } else {
-        otpStatus.innerText = "❌ OTP verification failed.";
-        showToast("❌ OTP verification failed. Please try again.", "#e74c3c");
+        otpStatus.innerText = "OTP verification failed.";
+        showToast("OTP verification failed. Please try again.", "#e74c3c");
       }
     } catch (err) {
-      otpStatus.innerText = `❌ Network error: ${err.message}`;
-      showToast(`❌ Network error: ${err.message}`, "#e67e22");
+      otpStatus.innerText = `Network error: ${err.message}`;
+      showToast(`Network error: ${err.message}`, "#e67e22");
     }
   });
 
   // Step 3️ Final Sign Up
   finalSignUpBtn.addEventListener("click", () => {
     if (!otpVerified || !keysGenerated) {
-      showToast("❌ Complete all steps before signing up.", "#e74c3c");
+      showToast("Complete all steps before signing up.", "#e74c3c");
       return;
     }
 
-    showToast("✅ Sign Up Successful! Redirecting...", "#27ae60");
+    showToast("Sign Up Successful! Redirecting...", "#27ae60");
 
-    // Store user info (optional: exclude secretKey for security in localStorage)
+    // Store user data in local storage
     localStorage.setItem("user", JSON.stringify({
       name: userData.name,
       email: userData.email,
       role: userData.role,
       publicKey: userData.publicKey,
-      // secretKey: userData.secretKey // optionally store if needed
     }));
 
     setTimeout(() => {
@@ -126,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Step 4️ Copy Keys
   copyKeysBtn.addEventListener("click", () => {
     if (!userData.publicKey || !userData.secretKey) {
-      showToast("❌ Keys not generated yet.", "#e74c3c");
+      showToast("Keys not generated yet.", "#e74c3c");
       return;
     }
 

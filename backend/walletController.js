@@ -264,10 +264,35 @@ const getTransactionHistory = async (req, res) => {
   }
 };
 
+// ✅ Get All Registered NGOs
+const getNGOs = async (req, res) => {
+  try {
+    const snapshot = await get(ref(db, "wallets"));
+    if (!snapshot.exists()) {
+      return res.status(200).json([]);
+    }
+
+    const wallets = snapshot.val();
+    const ngos = Object.values(wallets).filter(user => user.role === "NGO");
+
+    const ngoList = ngos.map(user => ({
+      name: user.name,
+      email: user.email,
+      publicKey: user.publicKey,
+    }));
+
+    res.status(200).json(ngoList);
+  } catch (error) {
+    console.error("🔥 Error fetching NGOs:", error);
+    res.status(500).json({ error: "Failed to fetch NGOs" });
+  }
+};
+
 export {
   sendOtp,
   verifyOtpAndCreateWallet,
   loginUser,
   sendFunds,
   getTransactionHistory,
+  getNGOs, 
 };

@@ -23,9 +23,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Copy Public Key
   document.getElementById("copyBtn").addEventListener("click", () => {
     navigator.clipboard.writeText(user.publicKey).then(() => {
-      showToast("✅ Public key copied to clipboard!", "success");
+      showToast("Public key copied to clipboard!", "success");
     }).catch(() => {
-      showToast("❌ Failed to copy public key.", "error");
+      showToast("Failed to copy public key.", "error");
     });
   });
 
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const amount = amountInput.value.trim();
 
     if (!recipient || !amount) {
-      showToast("❌ Please enter recipient and amount.", "error");
+      showToast("Please enter recipient and amount.", "error");
       return;
     }
 
@@ -73,11 +73,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         await updateBalance();
       } else {
-        showToast(`❌ ${data.error}`, "error");
+        showToast(`${data.error}`, "error");
       }
     } catch (err) {
-      console.error("❌ Transaction failed:", err);
-      showToast("❌ Something went wrong. Try again.", "error");
+      console.error("Transaction failed:", err);
+      showToast("Something went wrong. Try again.", "error");
     }
   });
 

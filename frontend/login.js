@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const password = document.getElementById("password").value.trim();
 
     if (!email || !password) {
-      showMessage("❌ Please fill in both email and password.", "red");
+      showMessage("Please fill in both email and password.", "red");
       return;
     }
 
@@ -27,10 +27,10 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("user", JSON.stringify(data.user));
         setTimeout(() => window.location.href = "landing.html", 1500);
       } else {
-        showMessage(`❌ ${data.error}`, "red");
+        showMessage(`${data.error}`, "red");
       }
     } catch (err) {
-      showMessage(`❌ Network error: ${err.message}`, "red");
+      showMessage(`Network error: ${err.message}`, "red");
     }
   });
 

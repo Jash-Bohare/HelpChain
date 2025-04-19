@@ -105,3 +105,4 @@ Content-Type: application/json
 ### Get All NGOs
 GET http://localhost:5000/api/ngos
 Content-Type: application/json
+
