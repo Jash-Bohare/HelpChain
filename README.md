@@ -40,7 +40,7 @@ Through OTP-based wallet creation, real-time transaction history, and blockchain
 
      -> LinkedIn: https://www.linkedin.com/in/mili-patel-10a6a635a/
 
----
+
 
 ### Our Approach:  
 - We chose this problem to address the lack of transparency and trust in charitable donations, especially in regions where digital accountability is limited.
@@ -186,19 +186,51 @@ Provide any backend/frontend split or environment setup notes here.
 
 ## 🧬 Future Scope
 
-List improvements, extensions, or follow-up features:
+1) NGO Document Verification: 
+Allow NGOs to upload official documents for on-platform verification, increasing trust for donors.
 
-- 📈 More integrations  
-- 🛡️ Security enhancements  
-- 🌐 Localization / broader accessibility  
+2) JWT-Based Authentication: 
+Secure sessions using JSON Web Tokens to replace the current OTP-only flow.
+
+3) Transaction Filtering & Categorization: 
+Add filters to sort transactions by sender, receiver, date, and amount for better user experience.
+
+4) Stellar Mainnet Deployment: 
+Transition from Testnet to Mainnet to enable real donations using real XLM.
+
+5) Integration with UPI or Fiat On-Ramps: 
+Enable users to fund their wallets using local payment methods like UPI, Stripe, or bank transfers.
+
+6) Localization & Accessibility: 
+Support multiple languages and ensure accessible UI for visually impaired users.
+
+7) Donor Impact Updates: 
+NGOs can send follow-ups or impact reports tied to specific donations.
 
 ---
 
 ## 📎 Resources / Credits
 
-- APIs or datasets used  
-- Open source libraries or tools referenced  
-- Acknowledgements  
+1) APIs & SDKs Used:
+- Stellar SDK – Wallet creation, fund transfers, and Horizon interaction
+- Horizon API – Transaction history, account queries
+- Friendbot API – Funding new Stellar testnet accounts
+- Firebase Realtime Database – Storing user and wallet data
+- Nodemailer – Sending OTPs and transaction alerts via email
+
+2) Open Source Libraries & Tools:
+- Tailwind CSS – UI styling
+- Toastify.js – Frontend notifications
+- bcrypt.js – Password hashing
+- Express.js – Backend framework
+- Visual Studio Code – Code editor
+- Thunder Client – API testing
+
+3) Acknowledgements:
+- Stellar Development Foundation for open access to blockchain tools
+- Firebase by Google for providing real-time database support
+- Devfolio & HackHazards organizers for this platform
+- OpenAI (ChatGPT) – for idea validation, development support, and documentation help 😄
 
 ---
 
