@@ -28,26 +28,31 @@ Through OTP-based wallet creation, real-time transaction history, and blockchain
 ### Team Members:  
 - Jash Bohare (Team Lead, Backend, Blockchain, Deployment)
 
-     a) GitHub: https://github.com/Jash-Bohare
+     -> GitHub: https://github.com/Jash-Bohare
 
-     b) LinkedIn: https://www.linkedin.com/in/jash-bohare/
+     -> LinkedIn: https://www.linkedin.com/in/jash-bohare/
   
 - Devdeep Chauhan (Frontend)
 
-     a) LinkedIn: https://www.linkedin.com/in/devdeep-chauhan-116350344/
+     -> LinkedIn: https://www.linkedin.com/in/devdeep-chauhan-116350344/
   
 - Mili Patel (UI/UX)
 
-     a) LinkedIn: https://www.linkedin.com/in/mili-patel-10a6a635a/
+     -> LinkedIn: https://www.linkedin.com/in/mili-patel-10a6a635a/
 
+---
 
+### Our Approach:  
+- We chose this problem to address the lack of transparency and trust in charitable donations, especially in regions where digital accountability is limited.
 
-### Your Approach:  
-We chose this problem because traditional donation platforms often lack transparency, making it difficult for donors to trust where their money is going. We wanted to solve this using Stellar’s decentralized and low-cost infrastructure.
+- Our goal was to build a platform that uses blockchain for traceability while being simple enough for anyone to use, even without prior crypto knowledge.
 
-The main challenges included integrating Stellar with Firebase Realtime Database, handling key security responsibly, and ensuring users could easily understand and interact with blockchain tech—especially those unfamiliar with wallets or XLM.
+- Key challenges we faced included:
+a) Seamless Stellar wallet integration with Firebase and user auth
+b) Handling secret key security and safe storage
+c) Fetching and displaying transaction history with readable names
 
-One key breakthrough was implementing OTP-based wallet creation, which made onboarding smoother. We also pivoted from building multi-chain support to focusing entirely on Stellar, which offered a faster, simpler, and more reliable testnet experience during the hackathon. 
+- One major breakthrough was building an OTP-based wallet system, making it safer and user-friendly.
 
 ---
 
@@ -99,46 +104,48 @@ One key breakthrough was implementing OTP-based wallet creation, which made onbo
 - Git + GitHub for version control
 
 
-### Sponsor Technologies Used (if any):
+### Sponsor Technologies Used:
 - [ ] **Groq:** _How you used Groq_  
 - [ ] **Monad:** _Your blockchain implementation_  
 - [ ] **Fluvio:** _Real-time data handling_  
 - [ ] **Base:** _AgentKit / OnchainKit / Smart Wallet usage_  
 - [ ] **Screenpipe:** _Screen-based analytics or workflows_  
-- [✅] **Stellar:** _Payments, identity, or token usage_
+- ✅ **Stellar:** _Payments, identity, or token usage_
 
+---
 
 ## ✨ Key Features
 
-1) User Authentication & Wallet Creation: Secure sign-up with OTP verification and Stellar wallet creation (public/private keys).
+1) OTP-Based Wallet Creation: Secure onboarding using email verification and OTP before generating a Stellar wallet.
 
-2) Backend Integration: Built with Express, Firebase, and Stellar SDK for wallet management, transactions, and data storage.
+2) Stellar Wallet Integration: Users get a Stellar Testnet wallet with public/secret key generation using Stellar SDK.
 
-3) Email Notifications: Sends OTP and transaction updates to users.
+3) Send Funds Instantly: Donors can send XLM directly to NGOs or other users using their public keys with real-time balance updates.
 
-4) Transaction Management: Users can send/receive XLM and view their transaction history.
+4) Listed NGOs Directory: Donors can browse verified NGOs, view their public keys, and donate directly without intermediaries.
 
-5) Mobile Responsiveness: Optimized UI for mobile devices using Tailwind CSS.
+5) Transaction History with Names: View a full history of sent and received transactions, with names instead of raw wallet addresses.
 
-6) Security: Password hashing, secret key protection, and log-out functionality for user security.
+6) Email Notifications: Users receive emails for OTP, wallet creation, welcome messages, and donation confirmations.
 
-7) User-Friendly Features: Copy public key with a button, toast alerts for feedback, and role-based display for donors and NGOs.
+7) Responsive UI: Mobile-friendly and clean design using Tailwind CSS and Vanilla JS.
+
+8) Public Key Copy Button: Easily copy your own or an NGO’s public key for quick transfers and sharing..
 
 The platform provides a seamless, secure, and responsive donation experience for both donors and NGOs.
 
-
+---
 
 ![image](https://github.com/user-attachments/assets/2989a5a4-854c-455d-840c-693fe3160a85)
-![image](https://github.com/user-attachments/assets/10b0d0b7-2f75-456a-8655-cced9c16a024)
-![image](https://github.com/user-attachments/assets/d6ca7efd-8a16-4c24-a202-3d5a02645ab6)
-
-
+![Screenshot 2025-04-19 211954](https://github.com/user-attachments/assets/cade38f4-93f3-47b7-a33f-8fb123e3f479)
+![Screenshot 2025-04-19 212051](https://github.com/user-attachments/assets/cb2a55d7-fc4b-404f-a5a2-c762bc446100)
+![Screenshot 2025-04-19 212137](https://github.com/user-attachments/assets/f8b5495c-5581-43e8-914c-46ff647b1817)
 
 ---
 
 ## 📽️ Demo & Deliverables
 
-- **Demo Video Link:** [Paste YouTube or Loom link here]  
+- **Demo Video Link:** https://youtu.be/oG7-3UCAxd4?si=SXTB_Rajb0o3wcVm
 - **Pitch Deck / PPT Link:** [Paste Google Slides / PDF link here]  
 
 ---
