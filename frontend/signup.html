@@ -68,7 +68,7 @@
 
     document.getElementById("sendOtpBtn").addEventListener("click", async () => {
       const email = document.getElementById("email").value.trim();
-      if (!email) return msg("❌ Please enter your email.", "red");
+      if (!email) return msg("Please enter your email.", "red");
 
       try {
         const res = await fetch("http://localhost:5000/api/send-otp", {
@@ -84,10 +84,10 @@
           document.getElementById("verifyOtpBtn").style.display = "inline-block";
           document.getElementById("sendOtpBtn").style.display = "none";
         } else {
-          msg(`❌ ${data.error}`, "red");
+          msg(`${data.error}`, "red");
         }
       } catch (err) {
-        msg("❌ Failed to send OTP. Check connection.", "red");
+        msg("Failed to send OTP. Check connection.", "red");
       }
     });
 
@@ -99,7 +99,7 @@
       const otp = document.getElementById("otp").value.trim();
 
       if (!name || !email || !password || !role || !otp)
-        return msg("❌ Fill all fields including OTP.", "red");
+        return msg("Fill all fields including OTP.", "red");
 
       userDetails = { name, email, password, role, otp };
 
@@ -113,7 +113,7 @@
         const data = await res.json();
         if (res.ok) {
           otpVerified = true;
-          msg("✅ OTP Verified!", "green");
+          msg("OTP Verified!", "green");
           document.getElementById("createWalletBtn").style.display = "inline-block";
           document.getElementById("otp").style.display = "none";
           document.getElementById("verifyOtpBtn").style.display = "none";
@@ -121,22 +121,22 @@
           userDetails.publicKey = data.publicKey;
           userDetails.secretKey = data.secretKey;
         } else {
-          msg(`❌ ${data.error}`, "red");
+          msg(`${data.error}`, "red");
         }
       } catch (err) {
-        msg(`❌ Network error: ${err.message}`, "red");
+        msg(`Network error: ${err.message}`, "red");
       }
     });
 
     document.getElementById("createWalletBtn").addEventListener("click", () => {
       if (!otpVerified || !userDetails.publicKey || !userDetails.secretKey) {
-        return msg("❌ Cannot generate wallet. Verify OTP first.", "red");
+        return msg("Cannot generate wallet. Verify OTP first.", "red");
       }
 
       keysGenerated = true;
       document.getElementById("keys").innerText =
         `My Public Key: ${userDetails.publicKey}\n\nMy Secret Key: ${userDetails.secretKey}\n\n⚠️ Please store these keys securely.`;
-      msg("✅ Wallet created successfully!", "green");
+      msg("Wallet created successfully!", "green");
 
       document.getElementById("finalSignUpBtn").style.display = "inline-block";
       document.getElementById("copyKeysBtn").style.display = "inline-block";
@@ -145,13 +145,13 @@
     document.getElementById("copyKeysBtn").addEventListener("click", () => {
       const keysText = document.getElementById("keys").innerText;
       navigator.clipboard.writeText(keysText)
-        .then(() => msg("✅ Keys copied to clipboard!", "green"))
-        .catch(() => msg("❌ Failed to copy keys.", "red"));
+        .then(() => msg("Keys copied to clipboard!", "green"))
+        .catch(() => msg("Failed to copy keys.", "red"));
     });
 
     document.getElementById("finalSignUpBtn").addEventListener("click", () => {
       if (!otpVerified || !keysGenerated) {
-        msg("❌ Please complete all steps before signing up.", "red");
+        msg("Please complete all steps before signing up.", "red");
         return;
       }
 
