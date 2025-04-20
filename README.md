@@ -146,7 +146,7 @@ The platform provides a seamless, secure, and responsive donation experience for
 ## 📽️ Demo & Deliverables
 
 - **Demo Video Link:** https://youtu.be/oG7-3UCAxd4?si=SXTB_Rajb0o3wcVm
-- **Pitch Deck / PPT Link:** [Paste Google Slides / PDF link here]  
+- **Pitch Deck / PPT Link:** (https://github.com/user-attachments/files/19825998/HelpChain.PPT.pptx)
 
 ---
 
@@ -154,7 +154,7 @@ The platform provides a seamless, secure, and responsive donation experience for
 
 - [ ] **All members of the team completed the mandatory task - Followed at least 2 of our social channels and filled the form** (Details in Participant Manual)  
 - [ ] **All members of the team completed Bonus Task 1 - Sharing of Badges and filled the form (2 points)**  (Details in Participant Manual)
-- [ ] **All members of the team completed Bonus Task 2 - Signing up for Sprint.dev and filled the form (3 points)**  (Details in Participant Manual)
+- [ ] **All members of the team completed Bonus Task 2 - Signing up for Sprint.dev and filled the form (3 points)**  
 
 *(Mark with ✅ if completed)*
 
@@ -163,24 +163,112 @@ The platform provides a seamless, secure, and responsive donation experience for
 ## 🧪 How to Run the Project
 
 ### Requirements:
-- Node.js / Python / Docker / etc.
-- API Keys (if any)
-- .env file setup (if needed)
+- **Node.js** (v16+ recommended)
+- **Firebase** account with a Realtime Database and Storage enabled
+- **Stellar Testnet** access (no setup required, uses public testnet)
+- Internet connection
 
-### Local Setup:
-```bash
-# Clone the repo
-git clone https://github.com/your-team/project-name
+---
 
-# Install dependencies
-cd project-name
-npm install
+### 🔐 API Keys / Environment Variables:
 
-# Start development server
-npm run dev
+Create a `.env` file in the `backend/` directory with the following format:
+
+```
+PORT=5000
 ```
 
-Provide any backend/frontend split or environment setup notes here.
+> ⚠️ No private keys or Firebase API keys are stored in `.env`. Firebase config is initialized safely via the frontend/backend config files.
+
+---
+
+### 🔧 Local Setup
+
+#### 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/HelpChain
+cd HelpChain
+```
+
+#### 2. Install Dependencies
+
+```bash
+cd backend
+npm install
+```
+
+> If you plan to run frontend separately, also navigate to the frontend folder and install dependencies (if any):
+```bash
+cd ../frontend
+# If using vanilla JS, no install needed
+```
+
+---
+
+#### 3. Start Backend Server
+
+```bash
+cd backend
+node server.js
+```
+
+The backend will start on `http://localhost:5000`
+
+---
+
+#### 4. Open the Frontend
+
+If using plain HTML/CSS/JS:
+
+- Navigate to `frontend/index.html` and open it in your browser.
+- OR use a Live Server extension if using VSCode.
+
+---
+
+### 📁 Folder Structure
+
+```
+HelpChain/
+├── backend/
+│   ├── config.js
+│   ├── emailService.js
+│   ├── firebase.js
+│   ├── firebaseUtils.js
+│   ├── otpController.js
+│   ├── server.js
+│   ├── serviceAccountKey.json
+│   ├── stellarUtils.js
+│   ├── walletController.js
+│   └── walletRoutes.js
+├── blockchain/
+│   ├── login.js
+│   ├── sendFunds.js
+│   └── wallet.js
+├── frontend/
+│   ├── index.html
+│   ├── landing.css
+│   ├── landing.html
+│   ├── landing.js
+│   ├── listed-ngos.js
+│   ├── login.css
+│   ├── login.html
+│   ├── login.js
+│   ├── script.js
+│   ├── signup.css
+│   ├── signup.html
+│   ├── transactions.html
+│   └── transactions.js
+
+```
+
+---
+
+### Notes for Judges
+
+- All Firebase connections use **Firebase Realtime Database** (Test Mode).
+- Stellar uses **Testnet**, so no real funds are involved.
+- You can simulate sending donations using a dummy user wallet to any NGO.
 
 ---
 
@@ -236,6 +324,11 @@ NGOs can send follow-ups or impact reports tied to specific donations.
 
 ## 🏁 Final Words
 
-Share your hackathon journey — challenges, learnings, fun moments, or shout-outs!
+HelpChain started as a simple idea — to bring transparency and trust to the world of donations using blockchain. Over the course of this hackathon, we transformed that idea into a working platform that combines Stellar, Firebase, and real-time interactions to create meaningful social impact.
 
+We faced challenges like managing secret keys securely, building a user-friendly OTP flow, and integrating blockchain data into a smooth web interface. But every obstacle taught us something — from optimizing backend routes to designing clean, mobile-friendly pages.
+
+This hackathon pushed us to explore new technologies and think deeply about user trust. We're proud of what we’ve built and excited to keep growing HelpChain beyond this weekend.
+
+A big shout-out to the HackHazards organizers, mentors, and community — and to Stellar for making blockchain accessible. 🚀
 ---
