@@ -187,7 +187,7 @@ PORT=5000
 #### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/HelpChain
+git clone https://github.com/Jash-Bohare/HelpChain
 cd HelpChain
 ```
 
