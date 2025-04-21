@@ -1,6 +1,6 @@
 async function fetchNGOs() {
     try {
-        const res = await fetch("https://helpchain-backend.onrender.com/api/ngos");
+        const res = await fetch("http://localhost:5000/api/ngos");
         const ngos = await res.json();
 
         const ngoList = document.getElementById("ngoList");

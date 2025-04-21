@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   async function fetchTransactions() {
     try {
-      const res = await fetch(`https://helpchain-backend.onrender.com/api/transactions/${user.publicKey}`);
+      const res = await fetch(`http://localhost:5000/api/transactions/${user.publicKey}`);
       const data = await res.json();
 
       if (res.ok) {
