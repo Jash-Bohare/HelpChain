@@ -146,17 +146,15 @@ The platform provides a seamless, secure, and responsive donation experience for
 ## 📽️ Demo & Deliverables
 
 - **Demo Video Link:** https://youtu.be/oG7-3UCAxd4?si=SXTB_Rajb0o3wcVm
-- **Pitch Deck / PPT Link:** (https://github.com/user-attachments/files/19825998/HelpChain.PPT.pptx)
+- **Pitch Deck / PPT Link:** https://docs.google.com/presentation/d/1Sq815fP1G8jSuKe37WFXJI6zhjwmTMiWkE629lyFRNo/edit?usp=sharing
 
 ---
 
 ## ✅ Tasks & Bonus Checklist
 
-- [ ] **All members of the team completed the mandatory task - Followed at least 2 of our social channels and filled the form** (Details in Participant Manual)  
-- [ ] **All members of the team completed Bonus Task 1 - Sharing of Badges and filled the form (2 points)**  (Details in Participant Manual)
-- [ ] **All members of the team completed Bonus Task 2 - Signing up for Sprint.dev and filled the form (3 points)**  
-
-*(Mark with ✅ if completed)*
+- [✅] **All members of the team completed the mandatory task - Followed at least 2 of our social channels and filled the form** (Details in Participant Manual)  
+- [✅] **All members of the team completed Bonus Task 1 - Sharing of Badges and filled the form (2 points)**  (Details in Participant Manual)
+- [✅] **All members of the team completed Bonus Task 2 - Signing up for Sprint.dev and filled the form (3 points)**  
 
 ---
 
